@@ -19,6 +19,10 @@ hero commit
 hero push
 ```
 
+## v0.2 — Progression
+
+- Levels, XP bar, level-up animation, and titles (Code Apprentice → Legendary Engineer)
+
 ## v0.1 verified
 
 - [x] hero init

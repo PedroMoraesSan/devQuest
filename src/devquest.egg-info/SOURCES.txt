@@ -1,3 +1,5 @@
+LICENSE
+README.md
 pyproject.toml
 src/devquest/__init__.py
 src/devquest/animations.py
@@ -7,6 +9,7 @@ src/devquest/git_utils.py
 src/devquest/main.py
 src/devquest/models.py
 src/devquest/profile.py
+src/devquest/progression.py
 src/devquest/ui.py
 src/devquest.egg-info/PKG-INFO
 src/devquest.egg-info/SOURCES.txt

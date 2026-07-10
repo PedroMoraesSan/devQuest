@@ -3,12 +3,13 @@ import subprocess
 import typer
 from rich.panel import Panel
 
-from devquest.animations import loading
+from devquest.animations import level_up, loading
 from devquest.database import SessionLocal
 from devquest.enemies import random_enemy
 from devquest.git_utils import has_changes, is_git_repo
 from devquest.models import Profile
 from devquest.profile import add_gold, add_xp, require_profile
+from devquest.progression import title_for_level
 from devquest.ui import console
 
 
@@ -82,7 +83,7 @@ def commit():
         )
         raise typer.Exit(1)
 
-    add_xp(enemy["xp"])
+    levels_gained = add_xp(enemy["xp"])
     add_gold(enemy["gold"])
 
     db = SessionLocal()
@@ -108,3 +109,6 @@ def commit():
             border_style="green",
         )
     )
+
+    for new_level in levels_gained:
+        level_up(new_level, title_for_level(new_level))

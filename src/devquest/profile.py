@@ -2,6 +2,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from devquest.database import SessionLocal
 from devquest.models import Profile
+from devquest.progression import level_from_xp
 from devquest.ui import console
 
 DATABASE_ERROR = (
@@ -41,13 +42,42 @@ def require_profile():
     return profile
 
 
-def add_xp(amount: int):
+def sync_level() -> int:
     db = SessionLocal()
 
     try:
         profile = db.query(Profile).first()
+        new_level = level_from_xp(profile.xp)
+
+        if profile.level != new_level:
+            profile.level = new_level
+            db.commit()
+
+        level = profile.level
+    except SQLAlchemyError:
+        console.print(DATABASE_ERROR)
+        raise SystemExit(1)
+    finally:
+        db.close()
+
+    return level
+
+
+def add_xp(amount: int) -> list[int]:
+    db = SessionLocal()
+
+    try:
+        profile = db.query(Profile).first()
+        old_level = level_from_xp(profile.xp)
         profile.xp += amount
+        new_level = level_from_xp(profile.xp)
+        profile.level = new_level
         db.commit()
+
+        if new_level > old_level:
+            return list(range(old_level + 1, new_level + 1))
+
+        return []
     except SQLAlchemyError:
         console.print(DATABASE_ERROR)
         raise SystemExit(1)

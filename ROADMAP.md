@@ -13,16 +13,16 @@
 
 ---
 
-## Next — v0.2 Progression
+## Done — v0.2 Progression
 
-- [ ] Levels
-- [ ] XP Bar
-- [ ] Level Up animation
-- [ ] Titles (Code Apprentice, Bug Hunter, etc.)
+- [x] Levels
+- [x] XP Bar
+- [x] Level Up animation
+- [x] Titles (Code Apprentice, Bug Hunter, etc.)
 
 ---
 
-## v0.3 Combat
+## Next — v0.3 Combat
 
 - [ ] Enemy HP
 - [ ] Attack animation

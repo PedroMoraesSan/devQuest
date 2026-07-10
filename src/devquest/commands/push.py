@@ -3,7 +3,7 @@ import subprocess
 import typer
 from rich.panel import Panel
 
-from devquest.animations import loading
+from devquest.animations import level_up, loading
 from devquest.database import SessionLocal
 from devquest.git_utils import (
     current_branch,
@@ -13,6 +13,7 @@ from devquest.git_utils import (
 )
 from devquest.models import Profile
 from devquest.profile import add_gold, add_xp, require_profile
+from devquest.progression import title_for_level
 from devquest.ui import console
 
 
@@ -89,7 +90,7 @@ def push():
         console.print(format_push_error(push_process.stderr), style="red")
         raise typer.Exit(1)
 
-    add_xp(PUSH_XP)
+    levels_gained = add_xp(PUSH_XP)
     add_gold(PUSH_GOLD)
 
     db = SessionLocal()
@@ -114,3 +115,6 @@ def push():
             border_style="green",
         )
     )
+
+    for new_level in levels_gained:
+        level_up(new_level, title_for_level(new_level))

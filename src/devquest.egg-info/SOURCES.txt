@@ -2,6 +2,7 @@ pyproject.toml
 src/devquest/__init__.py
 src/devquest/animations.py
 src/devquest/database.py
+src/devquest/enemies.py
 src/devquest/main.py
 src/devquest/models.py
 src/devquest/profile.py
@@ -15,4 +16,5 @@ src/devquest.egg-info/top_level.txt
 src/devquest/commands/__init__.py
 src/devquest/commands/commit.py
 src/devquest/commands/init.py
+src/devquest/commands/push.py
 src/devquest/commands/status.py

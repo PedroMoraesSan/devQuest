@@ -5,6 +5,7 @@ from devquest.achievements import list_achievements
 from devquest.profile import DatabaseError, get_profile, sync_level
 from devquest.progression import title_for_level, xp_bar, xp_into_level
 from devquest.quests import get_daily_quests
+from devquest.shop import get_equipped_name
 
 from devquest.ui import console
 
@@ -27,11 +28,13 @@ def status():
     total = len(achievements)
     daily = get_daily_quests()
     quests_done = sum(1 for q in daily if q["completed"])
+    equipped = get_equipped_name() or "—"
 
     table = Table(show_header=False)
 
     table.add_row("Hero", profile.name)
     table.add_row("Title", title)
+    table.add_row("Equipped", equipped)
     table.add_row("Level", str(level))
     table.add_row("XP", xp_bar(current, needed))
     table.add_row("Coins", str(profile.coins))

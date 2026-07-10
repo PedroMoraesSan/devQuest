@@ -33,9 +33,6 @@ Read [vision.md](vision.md) before contributing.
 - One complete mechanic per sprint
 - No XP for fake actions
 
-## Code style
+## Publishing
 
-- Functions over classes
-- Rich for UI, SQLite for data
-- Files under 250 lines
-- Do not break existing CLI commands
+See [PUBLISH.md](PUBLISH.md). Never commit PyPI tokens.

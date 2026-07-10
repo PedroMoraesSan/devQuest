@@ -25,6 +25,8 @@ class Profile(Base):
 
     streak = Column(Integer, default=0)
 
+    equipped = Column(String, nullable=True)
+
 
 class Achievement(Base):
     __tablename__ = "achievements"
@@ -58,3 +60,13 @@ class DailyQuest(Base):
     gold_reward = Column(Integer, nullable=False)
 
     completed = Column(Integer, default=0)
+
+
+class InventoryItem(Base):
+    __tablename__ = "inventory"
+
+    id = Column(Integer, primary_key=True)
+
+    key = Column(String, unique=True, nullable=False)
+
+    name = Column(String, nullable=False)

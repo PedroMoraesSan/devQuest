@@ -1,11 +1,78 @@
 Metadata-Version: 2.4
 Name: devquest
-Version: 0.1.0
+Version: 0.8.0
 Summary: Gamify your developer journey.
+Author-email: Pedro Moraes <pedromoraessan@users.noreply.github.com>
+License: MIT
+Project-URL: Homepage, https://github.com/PedroMoraesSan/devQuest
+Project-URL: Repository, https://github.com/PedroMoraesSan/devQuest
+Project-URL: Issues, https://github.com/PedroMoraesSan/devQuest/issues
+Keywords: cli,git,rpg,gamification,developer-tools
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Software Development :: Version Control :: Git
+Classifier: Topic :: Games/Entertainment
 Requires-Python: >=3.12
+Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: typer
 Requires-Dist: rich
 Requires-Dist: gitpython
 Requires-Dist: sqlalchemy
+Requires-Dist: textual
 Dynamic: license-file
+
+# DevQuest
+
+Gamify your developer journey.
+
+DevQuest is a terminal RPG where programming is the gameplay. Every Git action becomes a quest.
+
+## Installation
+
+```bash
+pip install devquest
+```
+
+For local development:
+
+```bash
+pip install -e .
+```
+
+## Commands
+
+```bash
+hero init
+hero status
+hero commit
+hero push
+hero achievements
+hero quests
+hero inventory
+hero shop
+hero dashboard
+```
+
+## Features
+
+- **v0.8** — Textual dashboard
+- **v0.6 / v0.7** — Cosmetic inventory and shop
+- **v0.5** — Daily quests
+- **v0.4** — Achievements
+- **v0.3** — Combat with HP, crits, bosses
+- **v0.2** — Levels, XP bar, titles
+- **v0.1** — Git commit/push gameplay with XP and Gold
+
+## Docs
+
+- [vision.md](vision.md) — product vision and philosophy
+- [ROADMAP.md](ROADMAP.md) — release plan
+- [CONTRIBUTING.md](CONTRIBUTING.md) — how to contribute
+- [PUBLISH.md](PUBLISH.md) — how to publish to PyPI

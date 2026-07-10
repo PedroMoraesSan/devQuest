@@ -1,4 +1,5 @@
 venv/
+.venv/
 __pycache__/
 *.py[cod]
 *.egg-info/
@@ -11,3 +12,13 @@ dist/
 build/
 *.db
 .DS_Store
+
+# Secrets — never commit tokens or credentials
+.env
+.env.*
+!.env.example
+.pypirc
+*.pypirc
+.pypi-token
+*.token
+secrets/

@@ -4,16 +4,39 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "devquest"
-version = "0.1.0"
+version = "0.8.0"
 description = "Gamify your developer journey."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.12"
-
+authors = [
+    { name = "Pedro Moraes", email = "pedromoraessan@users.noreply.github.com" },
+]
+keywords = ["cli", "git", "rpg", "gamification", "developer-tools"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Version Control :: Git",
+    "Topic :: Games/Entertainment",
+]
 dependencies = [
     "typer",
     "rich",
     "gitpython",
     "sqlalchemy",
+    "textual",
 ]
+
+[project.urls]
+Homepage = "https://github.com/PedroMoraesSan/devQuest"
+Repository = "https://github.com/PedroMoraesSan/devQuest"
+Issues = "https://github.com/PedroMoraesSan/devQuest/issues"
 
 [project.scripts]
 hero = "devquest.main:app"

@@ -7,6 +7,12 @@ DevQuest is a terminal RPG where programming is the gameplay. Every Git action b
 ## Installation
 
 ```bash
+pip install devquest
+```
+
+For local development:
+
+```bash
 pip install -e .
 ```
 
@@ -19,42 +25,24 @@ hero commit
 hero push
 hero achievements
 hero quests
+hero inventory
+hero shop
+hero dashboard
 ```
 
-## v0.5 — Daily Quests
+## Features
 
-- 3 daily missions with XP/Gold rewards; progress via real commits and pushes
-
-## v0.4 — Achievements
-
-- Unlock trophies for commits, pushes, night coding, weekends, bosses, and level 15
-
-## v0.3 — Combat
-
-- Enemy HP, attack rounds, critical hits, misses, and rare bosses on commit
-
-## v0.2 — Progression
-
-- Levels, XP bar, level-up animation, and titles (Code Apprentice → Legendary Engineer)
-
-## v0.1 verified
-
-- [x] hero init
-- [x] hero status
-- [x] hero commit
-- [x] hero push
-- [x] XP
-- [x] Gold
-- [x] SQLite
-- [x] Git integration
-- [x] Error handling (no git repo, nothing to commit, no remote)
-
-## Testing
-
-Manual scenarios run in `/Users/pedromoraes/anything/devquest-playground`.
+- **v0.8** — Textual dashboard
+- **v0.6 / v0.7** — Cosmetic inventory and shop
+- **v0.5** — Daily quests
+- **v0.4** — Achievements
+- **v0.3** — Combat with HP, crits, bosses
+- **v0.2** — Levels, XP bar, titles
+- **v0.1** — Git commit/push gameplay with XP and Gold
 
 ## Docs
 
 - [vision.md](vision.md) — product vision and philosophy
 - [ROADMAP.md](ROADMAP.md) — release plan
 - [CONTRIBUTING.md](CONTRIBUTING.md) — how to contribute
+- [PUBLISH.md](PUBLISH.md) — how to publish to PyPI

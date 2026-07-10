@@ -15,8 +15,15 @@ class DatabaseError(Exception):
     pass
 
 
+def _ensure_schema():
+    from devquest.shop import ensure_tables
+
+    ensure_tables()
+
+
 def get_profile():
     try:
+        _ensure_schema()
         db = SessionLocal()
         profile = db.query(Profile).first()
         db.close()
@@ -28,6 +35,7 @@ def get_profile():
 
 def require_profile():
     try:
+        _ensure_schema()
         db = SessionLocal()
         profile = db.query(Profile).first()
         db.close()

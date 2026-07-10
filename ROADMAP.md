@@ -49,11 +49,25 @@
 
 ---
 
-## Next — v0.6 Inventory
+## Done — v0.6 Inventory + v0.7 Shop
 
-- [ ] Inventory (cosmetic)
-- [ ] Shop
-- [ ] Textual dashboard
+- [x] Cosmetic inventory
+- [x] Equip items
+- [x] Shop (buy with Gold)
+- [x] `hero inventory` / `hero shop`
+
+---
+
+## Done — v0.8 Dashboard
+
+- [x] Textual dashboard
+- [x] Player / Quests / Achievements / Inventory / Statistics panels
+- [x] `hero dashboard` command
+
+---
+
+## Next — v0.9 Analytics
+
 - [ ] Developer analytics
 - [ ] Plugin system (v1.0)
 

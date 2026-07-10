@@ -5,6 +5,7 @@ src/devquest/__init__.py
 src/devquest/achievements.py
 src/devquest/animations.py
 src/devquest/combat.py
+src/devquest/dashboard.py
 src/devquest/database.py
 src/devquest/enemies.py
 src/devquest/git_utils.py
@@ -13,6 +14,7 @@ src/devquest/models.py
 src/devquest/profile.py
 src/devquest/progression.py
 src/devquest/quests.py
+src/devquest/shop.py
 src/devquest/ui.py
 src/devquest.egg-info/PKG-INFO
 src/devquest.egg-info/SOURCES.txt
@@ -23,7 +25,10 @@ src/devquest.egg-info/top_level.txt
 src/devquest/commands/__init__.py
 src/devquest/commands/achievements.py
 src/devquest/commands/commit.py
+src/devquest/commands/dashboard.py
 src/devquest/commands/init.py
+src/devquest/commands/inventory.py
 src/devquest/commands/push.py
 src/devquest/commands/quests.py
+src/devquest/commands/shop.py
 src/devquest/commands/status.py

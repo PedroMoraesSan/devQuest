@@ -3,7 +3,7 @@ Name: devquest
 Version: 0.8.0
 Summary: Gamify your developer journey.
 Author-email: Pedro Moraes <pedromoraessan@users.noreply.github.com>
-License: MIT
+License-Expression: MIT
 Project-URL: Homepage, https://github.com/PedroMoraesSan/devQuest
 Project-URL: Repository, https://github.com/PedroMoraesSan/devQuest
 Project-URL: Issues, https://github.com/PedroMoraesSan/devQuest/issues
@@ -11,7 +11,6 @@ Keywords: cli,git,rpg,gamification,developer-tools
 Classifier: Development Status :: 4 - Beta
 Classifier: Environment :: Console
 Classifier: Intended Audience :: Developers
-Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
 Classifier: Programming Language :: Python :: 3
 Classifier: Programming Language :: Python :: 3.12

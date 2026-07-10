@@ -3,6 +3,7 @@ README.md
 pyproject.toml
 src/devquest/__init__.py
 src/devquest/animations.py
+src/devquest/combat.py
 src/devquest/database.py
 src/devquest/enemies.py
 src/devquest/git_utils.py

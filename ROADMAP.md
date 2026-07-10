@@ -22,16 +22,16 @@
 
 ---
 
-## Next — v0.3 Combat
+## Done — v0.3 Combat
 
-- [ ] Enemy HP
-- [ ] Attack animation
-- [ ] Critical hit / miss
-- [ ] Bosses
+- [x] Enemy HP
+- [x] Attack animation
+- [x] Critical hit / miss
+- [x] Bosses
 
 ---
 
-## v0.4 Achievements
+## Next — v0.4 Achievements
 
 - [ ] First Commit, 10/100/1000 Commits
 - [ ] First Push, Night Owl, Weekend Warrior

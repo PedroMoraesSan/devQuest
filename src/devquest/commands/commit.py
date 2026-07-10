@@ -4,6 +4,7 @@ import typer
 from rich.panel import Panel
 
 from devquest.animations import level_up, loading
+from devquest.combat import run_battle
 from devquest.database import SessionLocal
 from devquest.enemies import random_enemy
 from devquest.git_utils import has_changes, is_git_repo
@@ -39,19 +40,26 @@ def commit():
 
     console.print()
 
+    if enemy.get("boss"):
+        console.print(
+            Panel.fit(
+                "[bold red]BOSS APPEARS![/bold red]",
+                border_style="red",
+            )
+        )
+        console.print()
+
     console.print(f"[bold red]{enemy['name']}[/bold red]")
 
     console.print()
 
-    loading("Battle")
-
-    console.print()
+    run_battle(enemy)
 
     message = typer.prompt("Commit message")
 
     console.print()
 
-    loading("Adding files")
+    loading("Final strike")
 
     add = subprocess.run(
         ["git", "add", "."],
@@ -98,11 +106,13 @@ def commit():
 
     console.print()
 
+    label = "Boss Defeated" if enemy.get("boss") else "Enemy Defeated"
+
     console.print(
         Panel.fit(
             (
                 "[bold green]Victory![/bold green]\n\n"
-                f"Enemy Defeated: {enemy['name']}\n\n"
+                f"{label}: {enemy['name']}\n\n"
                 f"+{enemy['xp']} XP\n"
                 f"+{enemy['gold']} Gold"
             ),

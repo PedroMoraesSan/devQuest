@@ -19,6 +19,10 @@ hero commit
 hero push
 ```
 
+## v0.3 — Combat
+
+- Enemy HP, attack rounds, critical hits, misses, and rare bosses on commit
+
 ## v0.2 — Progression
 
 - Levels, XP bar, level-up animation, and titles (Code Apprentice → Legendary Engineer)

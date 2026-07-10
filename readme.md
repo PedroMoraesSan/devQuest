@@ -17,7 +17,12 @@ hero init
 hero status
 hero commit
 hero push
+hero achievements
 ```
+
+## v0.4 — Achievements
+
+- Unlock trophies for commits, pushes, night coding, weekends, bosses, and level 15
 
 ## v0.3 — Combat
 

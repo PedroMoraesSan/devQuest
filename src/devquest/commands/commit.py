@@ -3,7 +3,8 @@ import subprocess
 import typer
 from rich.panel import Panel
 
-from devquest.animations import level_up, loading
+from devquest.achievements import check_achievements
+from devquest.animations import achievement_unlocked, level_up, loading
 from devquest.combat import run_battle
 from devquest.database import SessionLocal
 from devquest.enemies import random_enemy
@@ -122,3 +123,6 @@ def commit():
 
     for new_level in levels_gained:
         level_up(new_level, title_for_level(new_level))
+
+    for ach in check_achievements("commit", enemy=enemy):
+        achievement_unlocked(ach["name"], ach["description"])

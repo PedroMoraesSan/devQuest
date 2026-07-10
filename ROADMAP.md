@@ -31,15 +31,16 @@
 
 ---
 
-## Next — v0.4 Achievements
+## Done — v0.4 Achievements
 
-- [ ] First Commit, 10/100/1000 Commits
-- [ ] First Push, Night Owl, Weekend Warrior
-- [ ] Merge Master, Bug Slayer, Legendary Hero
+- [x] First Commit, 10/100/1000 Commits
+- [x] First Push, Night Owl, Weekend Warrior
+- [x] Merge Master, Bug Slayer, Legendary Hero
+- [x] `hero achievements` command
 
 ---
 
-## v0.5+
+## Next — v0.5 Daily Quests
 
 - [ ] Daily Quests
 - [ ] Inventory (cosmetic)

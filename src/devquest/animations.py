@@ -26,3 +26,18 @@ def level_up(new_level: int, title: str):
     )
 
     loading("Ascending")
+
+
+def achievement_unlocked(name: str, description: str):
+    console.print()
+
+    console.print(
+        Panel.fit(
+            (
+                "[bold magenta]ACHIEVEMENT UNLOCKED![/bold magenta]\n\n"
+                f"{name}\n"
+                f"[dim]{description}[/dim]"
+            ),
+            border_style="magenta",
+        )
+    )

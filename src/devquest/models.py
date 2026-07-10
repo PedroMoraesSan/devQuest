@@ -24,3 +24,13 @@ class Profile(Base):
     pushes = Column(Integer, default=0)
 
     streak = Column(Integer, default=0)
+
+
+class Achievement(Base):
+    __tablename__ = "achievements"
+
+    id = Column(Integer, primary_key=True)
+
+    key = Column(String, unique=True, nullable=False)
+
+    name = Column(String, nullable=False)

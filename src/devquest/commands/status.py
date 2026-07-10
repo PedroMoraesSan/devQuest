@@ -1,6 +1,7 @@
 from rich.panel import Panel
 from rich.table import Table
 
+from devquest.achievements import list_achievements
 from devquest.profile import DatabaseError, get_profile, sync_level
 from devquest.progression import title_for_level, xp_bar, xp_into_level
 
@@ -20,6 +21,9 @@ def status():
     level = sync_level()
     title = title_for_level(level)
     current, needed = xp_into_level(profile.xp)
+    achievements = list_achievements()
+    unlocked = sum(1 for _, done in achievements if done)
+    total = len(achievements)
 
     table = Table(show_header=False)
 
@@ -31,6 +35,7 @@ def status():
     table.add_row("Commits", str(profile.commits))
     table.add_row("Pushes", str(profile.pushes))
     table.add_row("Streak", f"{profile.streak} days")
+    table.add_row("Achievements", f"{unlocked}/{total}")
 
     console.print(
         Panel(

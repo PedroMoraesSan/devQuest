@@ -3,7 +3,8 @@ import subprocess
 import typer
 from rich.panel import Panel
 
-from devquest.animations import level_up, loading
+from devquest.achievements import check_achievements
+from devquest.animations import achievement_unlocked, level_up, loading
 from devquest.database import SessionLocal
 from devquest.git_utils import (
     current_branch,
@@ -118,3 +119,6 @@ def push():
 
     for new_level in levels_gained:
         level_up(new_level, title_for_level(new_level))
+
+    for ach in check_achievements("push"):
+        achievement_unlocked(ach["name"], ach["description"])

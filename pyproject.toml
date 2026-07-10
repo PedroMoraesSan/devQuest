@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "devquest"
+version = "0.1.0"
+description = "Gamify your developer journey."
+requires-python = ">=3.12"
+
+dependencies = [
+    "typer",
+    "rich",
+    "gitpython",
+    "sqlalchemy",
+]
+
+[project.scripts]
+hero = "devquest.main:app"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

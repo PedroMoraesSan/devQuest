@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: devquest
+Version: 0.1.0
+Summary: Gamify your developer journey.
+Requires-Python: >=3.12
+Requires-Dist: typer
+Requires-Dist: rich
+Requires-Dist: gitpython
+Requires-Dist: sqlalchemy

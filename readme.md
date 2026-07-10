@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="DevQuest — Gamify your developer journey" width="100%"/>
+  <img src="assets/banner.png" alt="DevQuest — Gamify your developer journey" width="100%"/>
 </p>
 
 <p align="center">

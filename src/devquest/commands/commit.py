@@ -6,22 +6,22 @@ from rich.panel import Panel
 from devquest.animations import loading
 from devquest.database import SessionLocal
 from devquest.enemies import random_enemy
+from devquest.git_utils import has_changes, is_git_repo
 from devquest.models import Profile
-from devquest.profile import add_gold, add_xp
+from devquest.profile import add_gold, add_xp, require_profile
 from devquest.ui import console
 
 
 def commit():
-    db = SessionLocal()
+    require_profile()
 
-    profile = db.query(Profile).first()
+    if not is_git_repo():
+        console.print("[red]Not a git repository.[/red]")
+        raise typer.Exit(1)
 
-    if not profile:
-        console.print("[red]Run hero init first.[/red]")
-        db.close()
-        raise typer.Exit()
-
-    db.close()
+    if not has_changes():
+        console.print("[yellow]Nothing to commit.[/yellow]")
+        raise typer.Exit(0)
 
     enemy = random_enemy()
 
@@ -29,7 +29,7 @@ def commit():
 
     console.print(
         Panel.fit(
-            "[bold cyan]⚔ Prepare for battle![/bold cyan]",
+            "[bold cyan]Prepare for battle![/bold cyan]",
             border_style="cyan",
         )
     )
@@ -38,7 +38,7 @@ def commit():
 
     console.print()
 
-    console.print(f"[bold red]👹 {enemy['name']}[/bold red]")
+    console.print(f"[bold red]{enemy['name']}[/bold red]")
 
     console.print()
 
@@ -59,8 +59,8 @@ def commit():
     )
 
     if add.returncode != 0:
-        console.print(add.stderr, style="red")
-        raise typer.Exit()
+        console.print(add.stderr.strip() or "Failed to stage files.", style="red")
+        raise typer.Exit(1)
 
     loading("Creating commit")
 
@@ -71,8 +71,16 @@ def commit():
     )
 
     if commit_process.returncode != 0:
-        console.print(commit_process.stderr, style="red")
-        raise typer.Exit()
+        stderr = commit_process.stderr.strip().lower()
+        if "nothing to commit" in stderr:
+            console.print("[yellow]Nothing to commit.[/yellow]")
+            raise typer.Exit(0)
+
+        console.print(
+            commit_process.stderr.strip() or "Failed to create commit.",
+            style="red",
+        )
+        raise typer.Exit(1)
 
     add_xp(enemy["xp"])
     add_gold(enemy["gold"])
@@ -92,7 +100,7 @@ def commit():
     console.print(
         Panel.fit(
             (
-                "[bold green]🏆 Victory![/bold green]\n\n"
+                "[bold green]Victory![/bold green]\n\n"
                 f"Enemy Defeated: {enemy['name']}\n\n"
                 f"+{enemy['xp']} XP\n"
                 f"+{enemy['gold']} Gold"

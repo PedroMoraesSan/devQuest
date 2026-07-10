@@ -3,6 +3,7 @@ src/devquest/__init__.py
 src/devquest/animations.py
 src/devquest/database.py
 src/devquest/enemies.py
+src/devquest/git_utils.py
 src/devquest/main.py
 src/devquest/models.py
 src/devquest/profile.py

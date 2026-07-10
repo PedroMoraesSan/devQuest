@@ -1,0 +1,19 @@
+---
+description: DevQuest project conventions and philosophy
+alwaysApply: true
+---
+
+# DevQuest Rules
+
+Read `vision.md`, `ROADMAP.md`, and `README.md` before generating code.
+
+- Keep code simple. Avoid overengineering.
+- Prefer functions over classes.
+- No service layer unless necessary.
+- Keep files under 250 lines.
+- Use Rich for terminal UI.
+- Use SQLite for persistence.
+- Preserve CLI UX — every command should feel like a game.
+- Never break existing commands (`hero init`, `status`, `commit`, `push`).
+- XP and Gold only after real developer actions succeed.
+- Always favor readability.

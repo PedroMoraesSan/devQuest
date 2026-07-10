@@ -1,19 +1,19 @@
 from rich.panel import Panel
 from rich.table import Table
 
-from devquest.profile import get_profile
+from devquest.profile import DatabaseError, get_profile
 
 from devquest.ui import console
 
 
 def status():
-
-    profile = get_profile()
+    try:
+        profile = get_profile()
+    except DatabaseError:
+        return
 
     if not profile:
-
         console.print("[red]Run hero init first.[/red]")
-
         return
 
     table = Table(show_header=False)

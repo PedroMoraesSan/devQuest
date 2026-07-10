@@ -5,8 +5,14 @@ from rich.panel import Panel
 
 from devquest.animations import loading
 from devquest.database import SessionLocal
+from devquest.git_utils import (
+    current_branch,
+    format_push_error,
+    has_remote,
+    is_git_repo,
+)
 from devquest.models import Profile
-from devquest.profile import add_gold, add_xp
+from devquest.profile import add_gold, add_xp, require_profile
 from devquest.ui import console
 
 
@@ -14,31 +20,62 @@ PUSH_XP = 50
 PUSH_GOLD = 25
 
 
+def _run_push(branch: str) -> subprocess.CompletedProcess[str]:
+    push_process = subprocess.run(
+        ["git", "push"],
+        capture_output=True,
+        text=True,
+    )
+
+    if push_process.returncode == 0:
+        return push_process
+
+    stderr = push_process.stderr.lower()
+
+    if "has no upstream branch" in stderr or "no upstream branch" in stderr:
+        console.print("[yellow]First push detected! Setting upstream...[/yellow]")
+
+        upstream = subprocess.run(
+            ["git", "push", "-u", "origin", branch],
+            capture_output=True,
+            text=True,
+        )
+
+        return upstream
+
+    return push_process
+
+
 def push():
-    db = SessionLocal()
+    require_profile()
 
-    profile = db.query(Profile).first()
+    if not is_git_repo():
+        console.print("[red]Not a git repository.[/red]")
+        raise typer.Exit(1)
 
-    if not profile:
-        console.print("[red]Run hero init first.[/red]")
-        db.close()
-        raise typer.Exit()
+    if not has_remote("origin"):
+        console.print("[red]No remote origin found.[/red]")
+        raise typer.Exit(1)
 
-    db.close()
+    branch = current_branch()
+
+    if not branch:
+        console.print("[red]Could not detect the current branch.[/red]")
+        raise typer.Exit(1)
 
     console.print()
 
     console.print(
         Panel.fit(
-            "[bold cyan]🚀 Preparing for siege![/bold cyan]",
+            "[bold cyan]Preparing for siege![/bold cyan]",
             border_style="cyan",
         )
     )
 
     console.print()
 
-    console.print("[bold red]🏰 Fortress[/bold red]")
-    console.print("[yellow]origin/main[/yellow]")
+    console.print("[bold red]Fortress[/bold red]")
+    console.print(f"[yellow]origin/{branch}[/yellow]")
 
     console.print()
 
@@ -46,35 +83,11 @@ def push():
 
     loading("Uploading artifacts")
 
-    push_process = subprocess.run(
-        ["git", "push"],
-        capture_output=True,
-        text=True,
-    )
+    push_process = _run_push(branch)
 
     if push_process.returncode != 0:
-
-        stderr = push_process.stderr.lower()
-
-        if "has no upstream branch" in stderr:
-
-            console.print(
-                "[yellow]First push detected! Setting upstream...[/yellow]"
-            )
-
-            upstream = subprocess.run(
-                ["git", "push", "-u", "origin", "main"],
-                capture_output=True,
-                text=True,
-            )
-
-            if upstream.returncode != 0:
-                console.print(upstream.stderr, style="red")
-                raise typer.Exit()
-
-        else:
-            console.print(push_process.stderr, style="red")
-            raise typer.Exit()
+        console.print(format_push_error(push_process.stderr), style="red")
+        raise typer.Exit(1)
 
     add_xp(PUSH_XP)
     add_gold(PUSH_GOLD)
@@ -94,7 +107,7 @@ def push():
     console.print(
         Panel.fit(
             (
-                "[bold green]🏆 Fortress Captured![/bold green]\n\n"
+                "[bold green]Fortress Captured![/bold green]\n\n"
                 f"+{PUSH_XP} XP\n"
                 f"+{PUSH_GOLD} Gold"
             ),

@@ -40,9 +40,17 @@
 
 ---
 
-## Next — v0.5 Daily Quests
+## Done — v0.5 Daily Quests
 
-- [ ] Daily Quests
+- [x] 3 daily quests (seeded by date)
+- [x] Progress on commit / push / enemy / boss
+- [x] Quest rewards (XP + Gold)
+- [x] `hero quests` command
+
+---
+
+## Next — v0.6 Inventory
+
 - [ ] Inventory (cosmetic)
 - [ ] Shop
 - [ ] Textual dashboard

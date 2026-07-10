@@ -12,6 +12,7 @@ src/devquest/main.py
 src/devquest/models.py
 src/devquest/profile.py
 src/devquest/progression.py
+src/devquest/quests.py
 src/devquest/ui.py
 src/devquest.egg-info/PKG-INFO
 src/devquest.egg-info/SOURCES.txt
@@ -24,4 +25,5 @@ src/devquest/commands/achievements.py
 src/devquest/commands/commit.py
 src/devquest/commands/init.py
 src/devquest/commands/push.py
+src/devquest/commands/quests.py
 src/devquest/commands/status.py

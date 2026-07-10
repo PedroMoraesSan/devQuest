@@ -4,7 +4,7 @@ import typer
 from rich.panel import Panel
 
 from devquest.achievements import check_achievements
-from devquest.animations import achievement_unlocked, level_up, loading
+from devquest.animations import achievement_unlocked, level_up, loading, quest_complete
 from devquest.combat import run_battle
 from devquest.database import SessionLocal
 from devquest.enemies import random_enemy
@@ -12,6 +12,7 @@ from devquest.git_utils import has_changes, is_git_repo
 from devquest.models import Profile
 from devquest.profile import add_gold, add_xp, require_profile
 from devquest.progression import title_for_level
+from devquest.quests import progress_quests
 from devquest.ui import console
 
 
@@ -122,6 +123,14 @@ def commit():
     )
 
     for new_level in levels_gained:
+        level_up(new_level, title_for_level(new_level))
+
+    completed_quests, quest_levels = progress_quests("commit", enemy=enemy)
+
+    for quest in completed_quests:
+        quest_complete(quest["name"], quest["xp"], quest["gold"])
+
+    for new_level in quest_levels:
         level_up(new_level, title_for_level(new_level))
 
     for ach in check_achievements("commit", enemy=enemy):

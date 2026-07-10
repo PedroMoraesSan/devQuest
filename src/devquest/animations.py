@@ -41,3 +41,19 @@ def achievement_unlocked(name: str, description: str):
             border_style="magenta",
         )
     )
+
+
+def quest_complete(name: str, xp: int, gold: int):
+    console.print()
+
+    console.print(
+        Panel.fit(
+            (
+                "[bold cyan]QUEST COMPLETE![/bold cyan]\n\n"
+                f"{name}\n\n"
+                f"+{xp} XP\n"
+                f"+{gold} Gold"
+            ),
+            border_style="cyan",
+        )
+    )

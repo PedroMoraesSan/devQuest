@@ -34,3 +34,27 @@ class Achievement(Base):
     key = Column(String, unique=True, nullable=False)
 
     name = Column(String, nullable=False)
+
+
+class DailyQuest(Base):
+    __tablename__ = "daily_quests"
+
+    id = Column(Integer, primary_key=True)
+
+    key = Column(String, nullable=False)
+
+    name = Column(String, nullable=False)
+
+    description = Column(String, nullable=False)
+
+    date = Column(String, nullable=False)
+
+    progress = Column(Integer, default=0)
+
+    target = Column(Integer, nullable=False)
+
+    xp_reward = Column(Integer, nullable=False)
+
+    gold_reward = Column(Integer, nullable=False)
+
+    completed = Column(Integer, default=0)

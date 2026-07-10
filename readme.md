@@ -18,7 +18,12 @@ hero status
 hero commit
 hero push
 hero achievements
+hero quests
 ```
+
+## v0.5 — Daily Quests
+
+- 3 daily missions with XP/Gold rewards; progress via real commits and pushes
 
 ## v0.4 — Achievements
 

@@ -57,6 +57,8 @@ Dynamic: license-file
 
 Every real developer action becomes a quest. XP and Gold only drop when the work actually lands.
 
+Commit and push open with a **3D ASCII spin** (donut-style engine) — battle orb on commit, siege core on push. Toggle with `hero config --animations off`.
+
 ---
 
 ## Install

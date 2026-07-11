@@ -85,6 +85,14 @@
 
 ---
 
+## Done — ASCII 3D Animations
+
+- [x] Donut-style 3D orb on commit (battle summon)
+- [x] 3D siege sphere on push
+- [x] Respects `animations = false` and non-TTY
+
+---
+
 ## Next — v0.9 Analytics
 
 - [ ] Developer analytics

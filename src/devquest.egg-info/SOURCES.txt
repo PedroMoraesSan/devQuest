@@ -4,6 +4,7 @@ pyproject.toml
 src/devquest/__init__.py
 src/devquest/achievements.py
 src/devquest/animations.py
+src/devquest/ascii3d.py
 src/devquest/combat.py
 src/devquest/config.py
 src/devquest/dashboard.py

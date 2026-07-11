@@ -6,6 +6,7 @@ from rich.panel import Panel
 from devquest.achievements import check_achievements
 from devquest.animations import (
     achievement_unlocked,
+    battle_spin,
     level_up,
     loading,
     quest_complete,
@@ -44,7 +45,7 @@ def commit():
         )
     )
 
-    loading("Summoning enemy...")
+    battle_spin(enemy["name"])
 
     console.print()
 

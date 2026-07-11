@@ -9,6 +9,7 @@ from devquest.animations import (
     level_up,
     loading,
     quest_complete,
+    siege_spin,
     victory_panel,
 )
 from devquest.database import SessionLocal
@@ -80,6 +81,8 @@ def push():
             border_style=border_style(),
         )
     )
+
+    siege_spin(f"origin/{branch}")
 
     console.print()
 

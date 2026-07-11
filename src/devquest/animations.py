@@ -8,6 +8,18 @@ from devquest.sounds import play
 from devquest.ui import border_style, console, style
 
 
+def battle_spin(enemy_name: str):
+    from devquest.ascii3d import play_spin
+
+    play_spin("orb", title=f"Summoning {enemy_name}")
+
+
+def siege_spin(target: str):
+    from devquest.ascii3d import play_spin
+
+    play_spin("siege", title=f"Siege: {target}")
+
+
 def loading(message: str):
     if not config_get("animations"):
         return

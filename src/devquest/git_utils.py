@@ -35,6 +35,73 @@ def current_branch(cwd: str | None = None) -> str | None:
     return result.stdout.strip()
 
 
+def list_remotes(cwd: str | None = None) -> list[tuple[str, str, str]]:
+    result = _run_git(["remote", "-v"], cwd=cwd)
+    if result.returncode != 0:
+        return []
+
+    remotes = []
+    for line in result.stdout.splitlines():
+        parts = line.split()
+        if len(parts) >= 3:
+            remotes.append((parts[0], parts[1], parts[2].strip("()")))
+    return remotes
+
+
+def list_branches(cwd: str | None = None) -> list[dict]:
+    result = _run_git(["branch", "-a", "--format=%(refname)|%(HEAD)"], cwd=cwd)
+    if result.returncode != 0:
+        return []
+
+    branches = []
+    for line in result.stdout.splitlines():
+        if "|" not in line:
+            continue
+
+        ref, head = line.split("|", 1)
+        ref = ref.strip()
+
+        if not ref or ref.endswith("/HEAD"):
+            continue
+
+        if ref.startswith("refs/heads/"):
+            name = ref.removeprefix("refs/heads/")
+            remote = False
+        elif ref.startswith("refs/remotes/"):
+            name = ref.removeprefix("refs/remotes/")
+            remote = True
+        else:
+            continue
+
+        branches.append(
+            {
+                "name": name,
+                "current": head.strip() == "*",
+                "remote": remote,
+            }
+        )
+
+    return branches
+
+
+def branch_exists(name: str, cwd: str | None = None) -> bool:
+    result = _run_git(["show-ref", "--verify", "--quiet", f"refs/heads/{name}"], cwd=cwd)
+    return result.returncode == 0
+
+
+def ref_exists(name: str, cwd: str | None = None) -> bool:
+    result = _run_git(["rev-parse", "--verify", "--quiet", name], cwd=cwd)
+    return result.returncode == 0
+
+
+def checkout_branch(name: str, cwd: str | None = None) -> subprocess.CompletedProcess[str]:
+    return _run_git(["checkout", name], cwd=cwd)
+
+
+def create_branch(name: str, cwd: str | None = None) -> subprocess.CompletedProcess[str]:
+    return _run_git(["checkout", "-b", name], cwd=cwd)
+
+
 def format_push_error(stderr: str) -> str:
     lower = stderr.lower()
 

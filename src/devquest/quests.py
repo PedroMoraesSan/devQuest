@@ -65,6 +65,15 @@ QUEST_POOL = [
         "xp": 60,
         "gold": 30,
     },
+    {
+        "key": "create_branch",
+        "name": "Pathfinder",
+        "description": "Create a new branch",
+        "event": "branch",
+        "target": 1,
+        "xp": 25,
+        "gold": 10,
+    },
 ]
 
 

@@ -96,6 +96,23 @@ hero quests →  daily missions that reset with the sun
 | `hero dashboard` | Full Textual menu (arrows + `q`) |
 | `hero config` | Settings (`--theme`, `--sounds on/off`) |
 | `hero theme` | List or switch color themes |
+| `hero remotes` | Scout fortresses (`git remote -v`) |
+| `hero branches` | Map all paths (`git branch -a`) |
+| `hero branch <name>` | Forge a new branch (+XP) |
+| `hero checkout <name>` | Travel to another branch |
+
+---
+
+## Branch control
+
+```bash
+hero remotes
+hero branches
+hero branch feature/loot
+hero checkout main
+```
+
+Creating a branch awards XP/Gold and can complete the daily Pathfinder quest.
 
 ---
 

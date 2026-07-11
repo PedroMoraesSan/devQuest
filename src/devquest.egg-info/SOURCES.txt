@@ -27,6 +27,8 @@ src/devquest.egg-info/requires.txt
 src/devquest.egg-info/top_level.txt
 src/devquest/commands/__init__.py
 src/devquest/commands/achievements.py
+src/devquest/commands/branches.py
+src/devquest/commands/checkout.py
 src/devquest/commands/commit.py
 src/devquest/commands/config_cmd.py
 src/devquest/commands/dashboard.py
@@ -34,6 +36,7 @@ src/devquest/commands/init.py
 src/devquest/commands/inventory.py
 src/devquest/commands/push.py
 src/devquest/commands/quests.py
+src/devquest/commands/remotes.py
 src/devquest/commands/shop.py
 src/devquest/commands/status.py
 src/devquest/commands/theme.py

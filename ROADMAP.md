@@ -75,9 +75,20 @@
 
 ---
 
+## Done — Branch Control
+
+- [x] `hero remotes` (git remote -v)
+- [x] `hero branches` (git branch -a)
+- [x] `hero branch <name>` (create + XP)
+- [x] `hero checkout <name>`
+- [x] Daily quest: Pathfinder (create a branch)
+
+---
+
 ## Next — v0.9 Analytics
 
 - [ ] Developer analytics
 - [ ] Plugin system (v1.0)
+- [ ] Global install / update / disable helpers
 
 See [vision.md](vision.md) for full details.

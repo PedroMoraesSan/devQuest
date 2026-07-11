@@ -85,10 +85,10 @@
 
 ---
 
-## Done — ASCII 3D Animations
+## Done — ASCII Sprite Intros
 
-- [x] Donut-style 3D orb on commit (battle summon)
-- [x] 3D siege sphere on push
+- [x] Hand-drawn enemy summon frames on commit
+- [x] Fortress breach frames on push
 - [x] Respects `animations = false` and non-TTY
 
 ---

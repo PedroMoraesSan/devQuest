@@ -9,15 +9,15 @@ from devquest.ui import border_style, console, style
 
 
 def battle_spin(enemy_name: str):
-    from devquest.ascii3d import play_spin
+    from devquest.sprites import BATTLE_FRAMES, play_sprites
 
-    play_spin("orb", title=f"Summoning {enemy_name}")
+    play_sprites(BATTLE_FRAMES, title=f"Summoning {enemy_name}")
 
 
 def siege_spin(target: str):
-    from devquest.ascii3d import play_spin
+    from devquest.sprites import SIEGE_FRAMES, play_sprites
 
-    play_spin("siege", title=f"Siege: {target}")
+    play_sprites(SIEGE_FRAMES, title=f"Siege: {target}")
 
 
 def loading(message: str):

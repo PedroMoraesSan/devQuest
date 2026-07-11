@@ -97,6 +97,12 @@
 
 - [ ] Developer analytics
 - [ ] Plugin system (v1.0)
-- [ ] Global install / update / disable helpers
+
+## Done — Global install / lifecycle
+
+- [x] Document `pip install --user` / `pipx`
+- [x] `hero disable` / `hero enable`
+- [x] `hero update`
+- [x] Help text + README
 
 See [vision.md](vision.md) for full details.

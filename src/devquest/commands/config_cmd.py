@@ -42,6 +42,7 @@ def config(
 
     table = Table(show_header=False)
     table.add_row("theme", cfg["theme"])
+    table.add_row("enabled", "on" if cfg["enabled"] else "off")
     table.add_row("animations", "on" if cfg["animations"] else "off")
     table.add_row("sounds", "on" if cfg["sounds"] else "off")
     table.add_row("default_branch", cfg["default_branch"])
@@ -56,4 +57,6 @@ def config(
     )
 
     console.print()
-    console.print("[dim]hero theme <name>  |  hero config --sounds on[/dim]")
+    console.print(
+        "[dim]hero disable · hero enable · hero update · hero theme <name>[/dim]"
+    )

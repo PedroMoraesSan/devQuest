@@ -34,8 +34,11 @@ Commit and push open with short **ASCII sprite intros** — enemy summon on comm
 
 ## Install
 
+Global (recommended):
+
 ```bash
-pip install devquest
+pip install --user devquest
+# or, isolated: pipx install devquest
 ```
 
 Then awaken your hero:
@@ -44,6 +47,15 @@ Then awaken your hero:
 hero init
 ```
 
+Pause / resume / update anytime:
+
+```bash
+hero disable   # skip gameplay until you want it back
+hero enable
+hero update    # pip install -U devquest
+```
+
+`hero --help` also lists these.
 ---
 
 ## Gameplay loop
@@ -102,6 +114,9 @@ hero quests →  daily missions that reset with the sun
 | `hero branches` | Map all paths (`git branch -a`) |
 | `hero branch <name>` | Forge a new branch (+XP) |
 | `hero checkout <name>` | Travel to another branch |
+| `hero disable` | Pause DevQuest (gameplay no-ops) |
+| `hero enable` | Resume after disable |
+| `hero update` | Upgrade from PyPI |
 
 ---
 
@@ -126,6 +141,7 @@ Config lives at `~/.devquest/config.toml`:
 theme = "cyberpunk"
 animations = true
 sounds = false
+enabled = true
 ```
 
 Themes: `cyberpunk`, `matrix`, `retro`, `nord`, `dracula`, `catppuccin`, `windows95`
@@ -158,7 +174,7 @@ Economy
 ## Quick start
 
 ```bash
-pip install devquest
+pip install --user devquest
 cd your-repo
 hero init
 hero status

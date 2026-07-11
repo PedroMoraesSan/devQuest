@@ -10,6 +10,7 @@ DEFAULTS = {
     "animations": True,
     "sounds": False,
     "default_branch": "main",
+    "enabled": True,
 }
 
 
@@ -44,6 +45,7 @@ def save_config(config: dict) -> None:
         f"animations = {'true' if merged['animations'] else 'false'}",
         f"sounds = {'true' if merged['sounds'] else 'false'}",
         f'default_branch = "{merged["default_branch"]}"',
+        f"enabled = {'true' if merged['enabled'] else 'false'}",
         "",
     ]
 

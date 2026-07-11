@@ -35,6 +35,7 @@ src/devquest/commands/config_cmd.py
 src/devquest/commands/dashboard.py
 src/devquest/commands/init.py
 src/devquest/commands/inventory.py
+src/devquest/commands/lifecycle.py
 src/devquest/commands/push.py
 src/devquest/commands/quests.py
 src/devquest/commands/remotes.py

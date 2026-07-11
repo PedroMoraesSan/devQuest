@@ -24,29 +24,26 @@ python -m build
 
 ## Upload (safe)
 
-Export the token only in your current shell session:
+Put the token in `.env` at the repo root (gitignored — see `.env.example`):
+
+```bash
+TWINE_USERNAME=__token__
+TWINE_PASSWORD=pypi-...
+```
+
+Then:
+
+```bash
+./scripts/publish.sh          # real PyPI
+./scripts/publish.sh test     # TestPyPI
+```
+
+Or export in the shell for a one-off upload (do not commit):
 
 ```bash
 export TWINE_USERNAME=__token__
-export TWINE_PASSWORD='pypi-...'   # paste token here, do not commit this
-```
-
-TestPyPI first (recommended):
-
-```bash
-twine upload --repository testpypi dist/*
-```
-
-Then real PyPI:
-
-```bash
+export TWINE_PASSWORD='pypi-...'
 twine upload dist/*
-```
-
-Clear the token from the shell when done:
-
-```bash
-unset TWINE_PASSWORD
 ```
 
 ## Verify

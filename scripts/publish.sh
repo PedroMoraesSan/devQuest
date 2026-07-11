@@ -1,16 +1,24 @@
 #!/usr/bin/env bash
 # Build and upload DevQuest to PyPI.
-# Requires TWINE_PASSWORD in the environment. Never hardcode tokens here.
+# Loads TWINE_PASSWORD from .env (never commit that file).
 
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
+if [[ -f .env ]]; then
+  set -a
+  # shellcheck disable=SC1091
+  source .env
+  set +a
+fi
+
 if [[ -z "${TWINE_PASSWORD:-}" ]]; then
   echo "Missing TWINE_PASSWORD."
-  echo "Export your PyPI token first:"
-  echo "  export TWINE_USERNAME=__token__"
-  echo "  export TWINE_PASSWORD='pypi-...'"
+  echo "Add it to .env (gitignored):"
+  echo "  TWINE_USERNAME=__token__"
+  echo "  TWINE_PASSWORD=pypi-..."
+  echo "Or export it in the shell before running this script."
   exit 1
 fi
 
@@ -28,4 +36,4 @@ else
   twine upload dist/*
 fi
 
-echo "Done. Unset the token: unset TWINE_PASSWORD"
+echo "Done."

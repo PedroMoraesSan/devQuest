@@ -2,12 +2,12 @@ from rich.panel import Panel
 from rich.table import Table
 
 from devquest.achievements import list_achievements
+from devquest.config import get as config_get
 from devquest.profile import DatabaseError, get_profile, sync_level
 from devquest.progression import title_for_level, xp_bar, xp_into_level
 from devquest.quests import get_daily_quests
 from devquest.shop import get_equipped_name
-
-from devquest.ui import console
+from devquest.ui import border_style, console, style
 
 
 def status():
@@ -17,7 +17,7 @@ def status():
         return
 
     if not profile:
-        console.print("[red]Run hero init first.[/red]")
+        console.print(style("danger", "Run hero init first."))
         return
 
     level = sync_level()
@@ -43,11 +43,13 @@ def status():
     table.add_row("Streak", f"{profile.streak} days")
     table.add_row("Achievements", f"{unlocked}/{total}")
     table.add_row("Daily Quests", f"{quests_done}/{len(daily)}")
+    table.add_row("Theme", config_get("theme"))
+    table.add_row("Sounds", "on" if config_get("sounds") else "off")
 
     console.print(
         Panel(
             table,
             title="DevQuest",
-            border_style="cyan",
+            border_style=border_style(),
         )
     )

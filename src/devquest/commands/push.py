@@ -4,7 +4,13 @@ import typer
 from rich.panel import Panel
 
 from devquest.achievements import check_achievements
-from devquest.animations import achievement_unlocked, level_up, loading, quest_complete
+from devquest.animations import (
+    achievement_unlocked,
+    level_up,
+    loading,
+    quest_complete,
+    victory_panel,
+)
 from devquest.database import SessionLocal
 from devquest.git_utils import (
     current_branch,
@@ -16,7 +22,7 @@ from devquest.models import Profile
 from devquest.profile import add_gold, add_xp, require_profile
 from devquest.progression import title_for_level
 from devquest.quests import progress_quests
-from devquest.ui import console
+from devquest.ui import border_style, console, style
 
 
 PUSH_XP = 50
@@ -36,7 +42,7 @@ def _run_push(branch: str) -> subprocess.CompletedProcess[str]:
     stderr = push_process.stderr.lower()
 
     if "has no upstream branch" in stderr or "no upstream branch" in stderr:
-        console.print("[yellow]First push detected! Setting upstream...[/yellow]")
+        console.print(style("warning", "First push detected! Setting upstream..."))
 
         upstream = subprocess.run(
             ["git", "push", "-u", "origin", branch],
@@ -53,32 +59,32 @@ def push():
     require_profile()
 
     if not is_git_repo():
-        console.print("[red]Not a git repository.[/red]")
+        console.print(style("danger", "Not a git repository."))
         raise typer.Exit(1)
 
     if not has_remote("origin"):
-        console.print("[red]No remote origin found.[/red]")
+        console.print(style("danger", "No remote origin found."))
         raise typer.Exit(1)
 
     branch = current_branch()
 
     if not branch:
-        console.print("[red]Could not detect the current branch.[/red]")
+        console.print(style("danger", "Could not detect the current branch."))
         raise typer.Exit(1)
 
     console.print()
 
     console.print(
         Panel.fit(
-            "[bold cyan]Preparing for siege![/bold cyan]",
-            border_style="cyan",
+            style("accent", "Preparing for siege!", bold=True),
+            border_style=border_style(),
         )
     )
 
     console.print()
 
-    console.print("[bold red]Fortress[/bold red]")
-    console.print(f"[yellow]origin/{branch}[/yellow]")
+    console.print(style("enemy", "Fortress", bold=True))
+    console.print(style("warning", f"origin/{branch}"))
 
     console.print()
 
@@ -105,17 +111,9 @@ def push():
 
     db.close()
 
-    console.print()
-
-    console.print(
-        Panel.fit(
-            (
-                "[bold green]Fortress Captured![/bold green]\n\n"
-                f"+{PUSH_XP} XP\n"
-                f"+{PUSH_GOLD} Gold"
-            ),
-            border_style="green",
-        )
+    victory_panel(
+        "Fortress Captured!",
+        f"+{PUSH_XP} XP\n+{PUSH_GOLD} Gold",
     )
 
     for new_level in levels_gained:

@@ -66,6 +66,15 @@
 
 ---
 
+## Done — Themes & Sounds
+
+- [x] `~/.devquest/config.toml`
+- [x] 7 themes (cyberpunk, matrix, retro, nord, dracula, catppuccin, windows95)
+- [x] Optional sounds (level up, crit, achievement, quest, victory)
+- [x] `hero config` / `hero theme`
+
+---
+
 ## Next — v0.9 Analytics
 
 - [ ] Developer analytics

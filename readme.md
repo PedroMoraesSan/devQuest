@@ -94,6 +94,29 @@ hero quests →  daily missions that reset with the sun
 | `hero inventory` | Cosmetic loot (`--equip <key>`) |
 | `hero shop` | Spend gold (`--buy <key>`) |
 | `hero dashboard` | Full Textual menu (arrows + `q`) |
+| `hero config` | Settings (`--theme`, `--sounds on/off`) |
+| `hero theme` | List or switch color themes |
+
+---
+
+## Themes & Sounds
+
+Config lives at `~/.devquest/config.toml`:
+
+```toml
+theme = "cyberpunk"
+animations = true
+sounds = false
+```
+
+Themes: `cyberpunk`, `matrix`, `retro`, `nord`, `dracula`, `catppuccin`, `windows95`
+
+```bash
+hero theme matrix
+hero config --sounds on
+```
+
+Sounds are optional and off by default (level up, crit, achievement, quest, victory).
 
 ---
 

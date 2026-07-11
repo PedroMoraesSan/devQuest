@@ -1,7 +1,9 @@
 import random
 
 from devquest.animations import loading
-from devquest.ui import console
+from devquest.sounds import play
+from devquest.ui import console, style
+
 
 BASE_DAMAGE = 20
 CRIT_MULTIPLIER = 2
@@ -41,14 +43,17 @@ def attack_damage(roll: str) -> int:
 
 def show_attack_result(roll: str, damage: int):
     if roll == "crit":
-        console.print(f"[bold yellow]CRITICAL HIT![/bold yellow] {damage} damage!")
+        play("critical")
+        console.print(
+            f"{style('crit', 'CRITICAL HIT!', bold=True)} {damage} damage!"
+        )
         return
 
     if roll == "miss":
-        console.print("[dim]Miss! No damage.[/dim]")
+        console.print(f"{style('muted', 'Miss! No damage.')}")
         return
 
-    console.print(f"[green]Hit![/green] {damage} damage.")
+    console.print(f"{style('hit', 'Hit!')} {damage} damage.")
 
 
 def run_battle(enemy: dict) -> int:
@@ -73,7 +78,9 @@ def run_battle(enemy: dict) -> int:
         console.print()
 
     if hp > 0:
-        console.print("[yellow]Enemy weakened! Finish with your commit.[/yellow]")
+        console.print(
+            style("warning", "Enemy weakened! Finish with your commit.")
+        )
         console.print()
 
     return hp

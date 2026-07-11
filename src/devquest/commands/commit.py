@@ -4,7 +4,13 @@ import typer
 from rich.panel import Panel
 
 from devquest.achievements import check_achievements
-from devquest.animations import achievement_unlocked, level_up, loading, quest_complete
+from devquest.animations import (
+    achievement_unlocked,
+    level_up,
+    loading,
+    quest_complete,
+    victory_panel,
+)
 from devquest.combat import run_battle
 from devquest.database import SessionLocal
 from devquest.enemies import random_enemy
@@ -13,18 +19,18 @@ from devquest.models import Profile
 from devquest.profile import add_gold, add_xp, require_profile
 from devquest.progression import title_for_level
 from devquest.quests import progress_quests
-from devquest.ui import console
+from devquest.ui import border_style, console, style
 
 
 def commit():
     require_profile()
 
     if not is_git_repo():
-        console.print("[red]Not a git repository.[/red]")
+        console.print(style("danger", "Not a git repository."))
         raise typer.Exit(1)
 
     if not has_changes():
-        console.print("[yellow]Nothing to commit.[/yellow]")
+        console.print(style("warning", "Nothing to commit."))
         raise typer.Exit(0)
 
     enemy = random_enemy()
@@ -33,8 +39,8 @@ def commit():
 
     console.print(
         Panel.fit(
-            "[bold cyan]Prepare for battle![/bold cyan]",
-            border_style="cyan",
+            style("accent", "Prepare for battle!", bold=True),
+            border_style=border_style(),
         )
     )
 
@@ -45,13 +51,13 @@ def commit():
     if enemy.get("boss"):
         console.print(
             Panel.fit(
-                "[bold red]BOSS APPEARS![/bold red]",
-                border_style="red",
+                style("boss", "BOSS APPEARS!", bold=True),
+                border_style=border_style(),
             )
         )
         console.print()
 
-    console.print(f"[bold red]{enemy['name']}[/bold red]")
+    console.print(style("enemy", enemy["name"], bold=True))
 
     console.print()
 
@@ -84,7 +90,7 @@ def commit():
     if commit_process.returncode != 0:
         stderr = commit_process.stderr.strip().lower()
         if "nothing to commit" in stderr:
-            console.print("[yellow]Nothing to commit.[/yellow]")
+            console.print(style("warning", "Nothing to commit."))
             raise typer.Exit(0)
 
         console.print(
@@ -106,20 +112,11 @@ def commit():
 
     db.close()
 
-    console.print()
-
     label = "Boss Defeated" if enemy.get("boss") else "Enemy Defeated"
 
-    console.print(
-        Panel.fit(
-            (
-                "[bold green]Victory![/bold green]\n\n"
-                f"{label}: {enemy['name']}\n\n"
-                f"+{enemy['xp']} XP\n"
-                f"+{enemy['gold']} Gold"
-            ),
-            border_style="green",
-        )
+    victory_panel(
+        "Victory!",
+        f"{label}: {enemy['name']}\n\n+{enemy['xp']} XP\n+{enemy['gold']} Gold",
     )
 
     for new_level in levels_gained:

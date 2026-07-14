@@ -3,7 +3,7 @@ from time import sleep
 from rich.panel import Panel
 from rich.progress import track
 
-from devquest.config import get as config_get
+from devquest.config import animations_enabled
 from devquest.sounds import play
 from devquest.ui import border_style, console, style
 
@@ -27,7 +27,7 @@ def supply_spin(target: str):
 
 
 def loading(message: str):
-    if not config_get("animations"):
+    if not animations_enabled():
         return
 
     for _ in track(range(40), description=message):

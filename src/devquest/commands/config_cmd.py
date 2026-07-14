@@ -2,7 +2,7 @@ import typer
 from rich.panel import Panel
 from rich.table import Table
 
-from devquest.config import CONFIG_PATH, load_config, update
+from devquest.config import CONFIG_PATH, animations_enabled, load_config, update
 from devquest.themes import THEMES, list_themes
 from devquest.ui import border_style, console, style
 
@@ -10,7 +10,12 @@ from devquest.ui import border_style, console, style
 def config(
     theme: str = typer.Option(None, "--theme", "-t", help="Set theme"),
     sounds: str = typer.Option(None, "--sounds", "-s", help="on or off"),
-    animations: str = typer.Option(None, "--animations", "-a", help="on or off"),
+    animations: str = typer.Option(
+        None,
+        "--animations",
+        "-a",
+        help="on or off — off skips sprites, battle rounds, and loading delays",
+    ),
 ):
     changes = {}
 
@@ -39,11 +44,15 @@ def config(
         console.print()
 
     cfg = load_config()
+    effective = "on" if animations_enabled() else "off"
+    stored = "on" if cfg["animations"] else "off"
 
     table = Table(show_header=False)
     table.add_row("theme", cfg["theme"])
     table.add_row("enabled", "on" if cfg["enabled"] else "off")
-    table.add_row("animations", "on" if cfg["animations"] else "off")
+    table.add_row("animations", stored)
+    if effective != stored:
+        table.add_row("animations (effective)", effective)
     table.add_row("sounds", "on" if cfg["sounds"] else "off")
     table.add_row("default_branch", cfg["default_branch"])
     table.add_row("config file", str(CONFIG_PATH))
@@ -58,5 +67,5 @@ def config(
 
     console.print()
     console.print(
-        "[dim]hero disable · hero enable · hero update · hero theme <name>[/dim]"
+        "[dim]hero config --animations off  ·  CI / DEVQUEST_ANIMATIONS=off for pipelines[/dim]"
     )

@@ -7,7 +7,7 @@ from rich.live import Live
 from rich.panel import Panel
 from rich.text import Text
 
-from devquest.config import get as config_get
+from devquest.config import animations_enabled
 from devquest.ui import border_style, console
 
 FRAME_SLEEP = 0.12
@@ -172,7 +172,7 @@ def _normalize(lines: list[str]) -> str:
 
 
 def play_sprites(frames: list[list[str]], title: str = "") -> None:
-    if not config_get("animations"):
+    if not animations_enabled():
         return
 
     if not sys.stdout.isatty():

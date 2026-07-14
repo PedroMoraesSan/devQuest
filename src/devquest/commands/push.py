@@ -12,6 +12,7 @@ from devquest.animations import (
     siege_spin,
     victory_panel,
 )
+from devquest.config import animations_enabled
 from devquest.database import SessionLocal
 from devquest.git_utils import (
     current_branch,
@@ -56,62 +57,14 @@ def _run_push(branch: str) -> subprocess.CompletedProcess[str]:
     return push_process
 
 
-def push():
-    require_profile()
-
-    if not is_git_repo():
-        console.print(style("danger", "Not a git repository."))
-        raise typer.Exit(1)
-
-    if not has_remote("origin"):
-        console.print(style("danger", "No remote origin found."))
-        raise typer.Exit(1)
-
-    branch = current_branch()
-
-    if not branch:
-        console.print(style("danger", "Could not detect the current branch."))
-        raise typer.Exit(1)
-
-    console.print()
-
-    console.print(
-        Panel.fit(
-            style("accent", "Preparing for siege!", bold=True),
-            border_style=border_style(),
-        )
-    )
-
-    siege_spin(f"origin/{branch}")
-
-    console.print()
-
-    console.print(style("enemy", "Fortress", bold=True))
-    console.print(style("warning", f"origin/{branch}"))
-
-    console.print()
-
-    loading("Preparing assault")
-
-    loading("Uploading artifacts")
-
-    push_process = _run_push(branch)
-
-    if push_process.returncode != 0:
-        console.print(format_push_error(push_process.stderr), style="red")
-        raise typer.Exit(1)
-
+def _reward() -> None:
     levels_gained = add_xp(PUSH_XP)
     add_gold(PUSH_GOLD)
 
     db = SessionLocal()
-
     profile = db.query(Profile).first()
-
     profile.pushes += 1
-
     db.commit()
-
     db.close()
 
     victory_panel(
@@ -132,3 +85,47 @@ def push():
 
     for ach in check_achievements("push"):
         achievement_unlocked(ach["name"], ach["description"])
+
+
+def push():
+    require_profile()
+
+    if not is_git_repo():
+        console.print(style("danger", "Not a git repository."))
+        raise typer.Exit(1)
+
+    if not has_remote("origin"):
+        console.print(style("danger", "No remote origin found."))
+        raise typer.Exit(1)
+
+    branch = current_branch()
+
+    if not branch:
+        console.print(style("danger", "Could not detect the current branch."))
+        raise typer.Exit(1)
+
+    animate = animations_enabled()
+
+    if animate:
+        console.print()
+        console.print(
+            Panel.fit(
+                style("accent", "Preparing for siege!", bold=True),
+                border_style=border_style(),
+            )
+        )
+        siege_spin(f"origin/{branch}")
+        console.print()
+        console.print(style("enemy", "Fortress", bold=True))
+        console.print(style("warning", f"origin/{branch}"))
+        console.print()
+        loading("Preparing assault")
+        loading("Uploading artifacts")
+
+    push_process = _run_push(branch)
+
+    if push_process.returncode != 0:
+        console.print(format_push_error(push_process.stderr), style="red")
+        raise typer.Exit(1)
+
+    _reward()

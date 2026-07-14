@@ -12,6 +12,7 @@ from devquest.animations import (
     supply_spin,
     victory_panel,
 )
+from devquest.config import animations_enabled
 from devquest.database import SessionLocal
 from devquest.git_utils import (
     current_branch,
@@ -48,6 +49,37 @@ def _run_pull(
     return subprocess.run(args, capture_output=True, text=True)
 
 
+def _reward(already: bool) -> None:
+    levels_gained = add_xp(PULL_XP)
+    add_gold(PULL_GOLD)
+
+    db = SessionLocal()
+    profile = db.query(Profile).first()
+    profile.pulls = (profile.pulls or 0) + 1
+    db.commit()
+    db.close()
+
+    body = f"+{PULL_XP} XP\n+{PULL_GOLD} Gold"
+    if already:
+        body = f"Already up to date.\n\n{body}"
+
+    victory_panel("Reinforcements Arrived!", body)
+
+    for new_level in levels_gained:
+        level_up(new_level, title_for_level(new_level))
+
+    completed_quests, quest_levels = progress_quests("pull")
+
+    for quest in completed_quests:
+        quest_complete(quest["name"], quest["xp"], quest["gold"])
+
+    for new_level in quest_levels:
+        level_up(new_level, title_for_level(new_level))
+
+    for ach in check_achievements("pull"):
+        achievement_unlocked(ach["name"], ach["description"])
+
+
 def pull(
     remote: str | None = typer.Argument(
         None,
@@ -77,25 +109,23 @@ def pull(
 
     branch = current_branch()
     label = f"{target_remote}/{ref or branch or 'HEAD'}"
+    animate = animations_enabled()
 
-    console.print()
-
-    console.print(
-        Panel.fit(
-            style("accent", "Calling reinforcements!", bold=True),
-            border_style=border_style(),
+    if animate:
+        console.print()
+        console.print(
+            Panel.fit(
+                style("accent", "Calling reinforcements!", bold=True),
+                border_style=border_style(),
+            )
         )
-    )
-
-    supply_spin(label)
-
-    console.print()
-    console.print(style("enemy", "Supply line", bold=True))
-    console.print(style("warning", label))
-    console.print()
-
-    loading("Contacting fortress")
-    loading("Receiving supplies")
+        supply_spin(label)
+        console.print()
+        console.print(style("enemy", "Supply line", bold=True))
+        console.print(style("warning", label))
+        console.print()
+        loading("Contacting fortress")
+        loading("Receiving supplies")
 
     pull_process = _run_pull(remote, ref)
 
@@ -103,32 +133,5 @@ def pull(
         console.print(format_pull_error(pull_process.stderr), style="red")
         raise typer.Exit(1)
 
-    levels_gained = add_xp(PULL_XP)
-    add_gold(PULL_GOLD)
-
-    db = SessionLocal()
-    profile = db.query(Profile).first()
-    profile.pulls = (profile.pulls or 0) + 1
-    db.commit()
-    db.close()
-
     already = "already up to date" in (pull_process.stdout or "").lower()
-    body = f"+{PULL_XP} XP\n+{PULL_GOLD} Gold"
-    if already:
-        body = f"Already up to date.\n\n{body}"
-
-    victory_panel("Reinforcements Arrived!", body)
-
-    for new_level in levels_gained:
-        level_up(new_level, title_for_level(new_level))
-
-    completed_quests, quest_levels = progress_quests("pull")
-
-    for quest in completed_quests:
-        quest_complete(quest["name"], quest["xp"], quest["gold"])
-
-    for new_level in quest_levels:
-        level_up(new_level, title_for_level(new_level))
-
-    for ach in check_achievements("pull"):
-        achievement_unlocked(ach["name"], ach["description"])
+    _reward(already)

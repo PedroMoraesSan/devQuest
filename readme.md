@@ -28,7 +28,7 @@
 
 Every real developer action becomes a quest. XP and Gold only drop when the work actually lands.
 
-Commit and push open with short **ASCII sprite intros** — enemy summon on commit, fortress breach on push. Toggle with `hero config --animations off`.
+Commit and push open with short **ASCII sprite intros** — enemy summon on commit, fortress breach on push. Toggle with `hero config --animations off` (also auto-off when `CI=true`).
 
 ---
 
@@ -102,7 +102,7 @@ hero quests →  daily missions that reset with the sun
 |---|---|
 | `hero init` | Create your hero profile |
 | `hero status` | Sheet: level, XP bar, gold, gear |
-| `hero commit` | Battle an enemy, then commit |
+| `hero commit [-m msg]` | Battle an enemy, then commit |
 | `hero push` | Assault the remote fortress |
 | `hero pull [remote] [ref]` | Call reinforcements (`git pull`) |
 | `hero achievements` | Trophy hall |
@@ -110,7 +110,7 @@ hero quests →  daily missions that reset with the sun
 | `hero inventory` | Cosmetic loot (`--equip <key>`) |
 | `hero shop` | Spend gold (`--buy <key>`) |
 | `hero dashboard` | Full Textual menu (arrows + `q`) |
-| `hero config` | Settings (`--theme`, `--sounds on/off`) |
+| `hero config` | Settings (`--animations`, `--sounds`, `--theme`) |
 | `hero theme` | List or switch color themes |
 | `hero remotes` | Scout fortresses (`git remote -v`) |
 | `hero branches` | Map all paths (`git branch -a`) |
@@ -154,6 +154,17 @@ Themes: `cyberpunk`, `matrix`, `retro`, `nord`, `dracula`, `catppuccin`, `window
 ```bash
 hero theme matrix
 hero config --sounds on
+hero config --animations off   # fast mode: no sprites, battle rounds, or loading bars
+```
+
+With animations off (or in CI), `commit` / `push` / `pull` run git first and print rewards in one shot afterward.
+
+```bash
+# CI / pipelines
+export CI=true
+# or:
+export DEVQUEST_ANIMATIONS=off
+hero commit -m "ship it"
 ```
 
 Sounds are optional and off by default (level up, crit, achievement, quest, victory).

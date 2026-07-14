@@ -1,4 +1,5 @@
 from pathlib import Path
+from os import environ
 from tomllib import loads
 
 from devquest.database import BASE_DIR
@@ -72,3 +73,28 @@ def update(**kwargs) -> dict:
             config[key] = value
     save_config(config)
     return config
+
+
+def _env_flag(name: str) -> bool | None:
+    raw = environ.get(name)
+    if raw is None or raw.strip() == "":
+        return None
+    return raw.strip().lower() in ("1", "true", "yes", "on")
+
+
+def animations_enabled() -> bool:
+    """Theatrical delays (sprites, battle rounds, loading bars).
+
+    Priority:
+    1. DEVQUEST_ANIMATIONS env (on/off)
+    2. CI=true → off (CI/CD friendly)
+    3. config.toml animations
+    """
+    env = _env_flag("DEVQUEST_ANIMATIONS")
+    if env is not None:
+        return env
+
+    if _env_flag("CI") is True:
+        return False
+
+    return bool(get("animations"))

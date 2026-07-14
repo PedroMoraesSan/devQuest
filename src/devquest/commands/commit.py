@@ -13,6 +13,7 @@ from devquest.animations import (
     victory_panel,
 )
 from devquest.combat import run_battle
+from devquest.config import animations_enabled
 from devquest.database import SessionLocal
 from devquest.enemies import random_enemy
 from devquest.git_utils import has_changes, is_git_repo
@@ -23,53 +24,7 @@ from devquest.quests import progress_quests
 from devquest.ui import border_style, console, style
 
 
-def commit():
-    require_profile()
-
-    if not is_git_repo():
-        console.print(style("danger", "Not a git repository."))
-        raise typer.Exit(1)
-
-    if not has_changes():
-        console.print(style("warning", "Nothing to commit."))
-        raise typer.Exit(0)
-
-    enemy = random_enemy()
-
-    console.print()
-
-    console.print(
-        Panel.fit(
-            style("accent", "Prepare for battle!", bold=True),
-            border_style=border_style(),
-        )
-    )
-
-    battle_spin(enemy["name"])
-
-    console.print()
-
-    if enemy.get("boss"):
-        console.print(
-            Panel.fit(
-                style("boss", "BOSS APPEARS!", bold=True),
-                border_style=border_style(),
-            )
-        )
-        console.print()
-
-    console.print(style("enemy", enemy["name"], bold=True))
-
-    console.print()
-
-    run_battle(enemy)
-
-    message = typer.prompt("Commit message")
-
-    console.print()
-
-    loading("Final strike")
-
+def _do_commit(message: str) -> None:
     add = subprocess.run(
         ["git", "add", "."],
         capture_output=True,
@@ -100,17 +55,15 @@ def commit():
         )
         raise typer.Exit(1)
 
+
+def _reward(enemy: dict) -> None:
     levels_gained = add_xp(enemy["xp"])
     add_gold(enemy["gold"])
 
     db = SessionLocal()
-
     profile = db.query(Profile).first()
-
     profile.commits += 1
-
     db.commit()
-
     db.close()
 
     label = "Boss Defeated" if enemy.get("boss") else "Enemy Defeated"
@@ -133,3 +86,57 @@ def commit():
 
     for ach in check_achievements("commit", enemy=enemy):
         achievement_unlocked(ach["name"], ach["description"])
+
+
+def commit(
+    message: str | None = typer.Option(
+        None,
+        "--message",
+        "-m",
+        help="Commit message (skip prompt; useful in CI).",
+    ),
+):
+    require_profile()
+
+    if not is_git_repo():
+        console.print(style("danger", "Not a git repository."))
+        raise typer.Exit(1)
+
+    if not has_changes():
+        console.print(style("warning", "Nothing to commit."))
+        raise typer.Exit(0)
+
+    enemy = random_enemy()
+    animate = animations_enabled()
+
+    if animate:
+        console.print()
+        console.print(
+            Panel.fit(
+                style("accent", "Prepare for battle!", bold=True),
+                border_style=border_style(),
+            )
+        )
+        battle_spin(enemy["name"])
+        console.print()
+
+        if enemy.get("boss"):
+            console.print(
+                Panel.fit(
+                    style("boss", "BOSS APPEARS!", bold=True),
+                    border_style=border_style(),
+                )
+            )
+            console.print()
+
+        console.print(style("enemy", enemy["name"], bold=True))
+        console.print()
+        run_battle(enemy)
+
+    if not message:
+        message = typer.prompt("Commit message")
+
+    console.print()
+    loading("Final strike")
+    _do_commit(message)
+    _reward(enemy)

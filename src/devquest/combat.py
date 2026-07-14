@@ -1,6 +1,7 @@
 import random
 
 from devquest.animations import loading
+from devquest.config import animations_enabled
 from devquest.sounds import play
 from devquest.ui import console, style
 
@@ -57,6 +58,10 @@ def show_attack_result(roll: str, damage: int):
 
 
 def run_battle(enemy: dict) -> int:
+    """Full theatrical battle. No-op when animations are off (CI/fast mode)."""
+    if not animations_enabled():
+        return 0
+
     hp = enemy["hp"]
     max_hp = hp
 

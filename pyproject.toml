@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "devquest"
-version = "0.9.1"
+version = "0.9.2"
 description = "Gamify your developer journey."
 readme = "README.md"
 license = "MIT"

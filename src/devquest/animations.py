@@ -20,6 +20,12 @@ def siege_spin(target: str):
     play_sprites(SIEGE_FRAMES, title=f"Siege: {target}")
 
 
+def supply_spin(target: str):
+    from devquest.sprites import SIEGE_FRAMES, play_sprites
+
+    play_sprites(SIEGE_FRAMES, title=f"Reinforcements: {target}")
+
+
 def loading(message: str):
     if not config_get("animations"):
         return

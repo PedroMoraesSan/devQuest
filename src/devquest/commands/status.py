@@ -40,6 +40,7 @@ def status():
     table.add_row("Coins", str(profile.coins))
     table.add_row("Commits", str(profile.commits))
     table.add_row("Pushes", str(profile.pushes))
+    table.add_row("Pulls", str(getattr(profile, "pulls", 0) or 0))
     table.add_row("Streak", f"{profile.streak} days")
     table.add_row("Achievements", f"{unlocked}/{total}")
     table.add_row("Daily Quests", f"{quests_done}/{len(daily)}")

@@ -15,6 +15,7 @@ from devquest.commands.lifecycle import (
     update_cmd,
 )
 from devquest.commands.push import push
+from devquest.commands.pull import pull
 from devquest.commands.quests import quests
 from devquest.commands.remotes import remotes
 from devquest.commands.shop import shop
@@ -47,6 +48,7 @@ app.command()(init)
 app.command()(status)
 app.command()(commit)
 app.command()(push)
+app.command()(pull)
 app.command("achievements")(achievements)
 app.command()(quests)
 app.command()(inventory)

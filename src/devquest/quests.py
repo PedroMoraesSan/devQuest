@@ -48,6 +48,15 @@ QUEST_POOL = [
         "gold": 20,
     },
     {
+        "key": "pull_1",
+        "name": "Call for Aid",
+        "description": "Make 1 pull",
+        "event": "pull",
+        "target": 1,
+        "xp": 25,
+        "gold": 10,
+    },
+    {
         "key": "merge_conflict",
         "name": "Conflict Resolver",
         "description": "Defeat a Merge Conflict",

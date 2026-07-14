@@ -89,6 +89,7 @@ hero update    # pip install -U devquest
 
 ```text
 hero push   →  siege the fortress (origin/<branch>)
+hero pull   →  call reinforcements from the remote
 hero status →  XP bar, title, equipped gear, quests
 hero quests →  daily missions that reset with the sun
 ```
@@ -103,6 +104,7 @@ hero quests →  daily missions that reset with the sun
 | `hero status` | Sheet: level, XP bar, gold, gear |
 | `hero commit` | Battle an enemy, then commit |
 | `hero push` | Assault the remote fortress |
+| `hero pull [remote] [ref]` | Call reinforcements (`git pull`) |
 | `hero achievements` | Trophy hall |
 | `hero quests` | Daily quest board |
 | `hero inventory` | Cosmetic loot (`--equip <key>`) |
@@ -127,6 +129,9 @@ hero remotes
 hero branches
 hero branch feature/loot
 hero checkout main
+hero pull
+hero pull origin
+hero pull origin main
 ```
 
 Creating a branch awards XP/Gold and can complete the daily Pathfinder quest.

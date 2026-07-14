@@ -105,6 +105,7 @@ def _stats_panel() -> str:
             "",
             f"Commits:       {profile.commits}",
             f"Pushes:        {profile.pushes}",
+            f"Pulls:         {getattr(profile, 'pulls', 0) or 0}",
             f"Streak:        {profile.streak} days",
             f"Achievements:  {unlocked}/{len(achievements)}",
             f"Daily Quests:  {quests_done}/{len(daily)}",

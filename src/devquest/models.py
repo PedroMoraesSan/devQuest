@@ -23,6 +23,8 @@ class Profile(Base):
 
     pushes = Column(Integer, default=0)
 
+    pulls = Column(Integer, default=0)
+
     streak = Column(Integer, default=0)
 
     equipped = Column(String, nullable=True)

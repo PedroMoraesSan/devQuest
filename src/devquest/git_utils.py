@@ -125,3 +125,34 @@ def format_push_error(stderr: str) -> str:
         return stripped
 
     return "Push failed. Check your git remote and network connection."
+
+
+def format_pull_error(stderr: str) -> str:
+    lower = stderr.lower()
+
+    if "could not resolve hostname" in lower or "could not resolve host" in lower:
+        return "Remote repository not found or unreachable."
+
+    if "permission denied" in lower or "publickey" in lower:
+        return "SSH authentication failed. Check your SSH key and remote access."
+
+    if "authentication failed" in lower or "invalid username or password" in lower:
+        return "Authentication failed. Check your credentials for the remote."
+
+    if "conflict" in lower or "fix conflicts" in lower:
+        return "Pull conflict! Resolve merge conflicts, then continue."
+
+    if "diverged" in lower or "need to specify how to reconcile" in lower:
+        return "Histories diverged. Rebase or merge manually, then retry."
+
+    if "no tracking information" in lower or "no upstream" in lower:
+        return "No upstream branch. Try: hero pull origin"
+
+    if "not a git repository" in lower:
+        return "Not a git repository."
+
+    stripped = stderr.strip()
+    if stripped:
+        return stripped
+
+    return "Pull failed. Check your git remote and network connection."

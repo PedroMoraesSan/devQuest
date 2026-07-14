@@ -39,6 +39,11 @@ ACHIEVEMENTS = [
         "description": "Push for the first time.",
     },
     {
+        "key": "first_pull",
+        "name": "First Pull",
+        "description": "Pull reinforcements for the first time.",
+    },
+    {
         "key": "night_owl",
         "name": "Night Owl",
         "description": "Commit between 22:00 and 05:00.",
@@ -88,6 +93,9 @@ def _is_earned(key: str, profile: Profile, event: str, enemy: dict | None) -> bo
 
     if key == "first_push":
         return profile.pushes >= 1
+
+    if key == "first_pull":
+        return getattr(profile, "pulls", 0) >= 1
 
     if key == "night_owl":
         return event == "commit" and (now.hour >= 22 or now.hour < 5)
@@ -182,6 +190,7 @@ def sync_milestones() -> list[dict]:
             "commits_100",
             "commits_1000",
             "first_push",
+            "first_pull",
             "legendary_hero",
         }
 

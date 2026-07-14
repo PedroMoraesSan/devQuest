@@ -61,6 +61,7 @@ CATALOG = [
 def ensure_tables():
     Base.metadata.create_all(engine)
     _ensure_equipped_column()
+    _ensure_pulls_column()
     _grant_starter_item()
 
 
@@ -74,6 +75,24 @@ def _ensure_equipped_column():
         ]
         if "equipped" not in cols:
             db.execute(text("ALTER TABLE profiles ADD COLUMN equipped VARCHAR"))
+            db.commit()
+    except SQLAlchemyError:
+        console.print(DATABASE_ERROR)
+        raise SystemExit(1)
+    finally:
+        db.close()
+
+
+def _ensure_pulls_column():
+    db = SessionLocal()
+
+    try:
+        cols = [
+            row[1]
+            for row in db.execute(text("PRAGMA table_info(profiles)")).fetchall()
+        ]
+        if "pulls" not in cols:
+            db.execute(text("ALTER TABLE profiles ADD COLUMN pulls INTEGER DEFAULT 0"))
             db.commit()
     except SQLAlchemyError:
         console.print(DATABASE_ERROR)

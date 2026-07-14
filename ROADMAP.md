@@ -105,4 +105,9 @@
 - [x] `hero update`
 - [x] Help text + README
 
+## Done — Pull
+
+- [x] `hero pull` / `hero pull origin` / `hero pull origin <branch>`
+- [x] XP/Gold + First Pull achievement + daily quest
+
 See [vision.md](vision.md) for full details.
